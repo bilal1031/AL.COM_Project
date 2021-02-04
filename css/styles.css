@@ -1,0 +1,11 @@
+.search_container {
+  height: 100%;
+  width: 100%;
+  padding-top: 10%;
+  padding-left: 30%;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
