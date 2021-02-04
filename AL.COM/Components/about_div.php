@@ -3,7 +3,7 @@
                 <div class="card" style="width: 45%;">
                     <div class="card-body">
                         <h5 class="card-title">About Us</h5>
-                        <h6 class="card-subtitle mb-2 ">Bit Technologies Inc</h6>
+                        <h6 class="card-subtitle mb-2 ">Bit Technologies</h6>
                         <p class="card-text">This software is designed and coded by <b>Bit Technologies Inc</b>
                                             to be provided for <b>AL.COM</b>, whole sale dealer for Hardware Componenets.
                                             <br>
