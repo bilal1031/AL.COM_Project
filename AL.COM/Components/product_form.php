@@ -10,20 +10,21 @@
                             </div>';    
                     }else{
                     
-                        $sql = 'INSERT INTO product(name,price,category) VALUES("'.$_POST['product_name'].'","'.$_POST['price'].'","'.$cat_id.'");';
+                        $sql = 'INSERT INTO product(name,purchaseprice,saleprice,category) VALUES("'.$_POST['product_name'].'","'.$_POST['purchaseprice'].'","'.$_POST['saleprice'].'","'.$cat_id.'");';
                         save_data($sql);
                           
                     }
               }else{
-                    $sql = 'UPDATE product SET name = "'.$_POST['product_name'].'" ,price = "'.$_POST['price'].'" ,category = "'.$cat_id.'" WHERE p_id = '.$p_id.'';
+                    $sql = 'UPDATE product SET name = "'.$_POST['product_name'].'" ,purchaseprice = "'.$_POST['purchaseprice'].'" ,saleprice = "'.$_POST['saleprice'].'" ,category = "'.$cat_id.'" WHERE p_id = '.$p_id.'';
                     save_data($sql);
               }
             }
             include "./Config/connection.php";
             $data;
             $data["name"] = "";
-            $data["price"] = "";
             $data["c_name"] = "";
+            $data["purchaseprice"] = "";
+            $data["saleprice"] = "";
             $link = $_SERVER["PHP_SELF"];
             if(isset($_POST['submit'])){
               if(isset($_GET['editproduct'])){
@@ -40,7 +41,8 @@
                 $link = "product_form.php?editproduct=".$_GET['editproduct']."&p_id=".$data['p_id']."";
                 if($data == null){
                   $data["name"] = "";
-                  $data["price"] = "";
+                  $data["purchaseprice"] = "";
+                  $data["saleprice"] = "";
                   $data["c_name"] = "";
                   $link = $_SERVER["PHP_SELF"];
                 }
@@ -56,8 +58,12 @@
       <input type="product_name" class="form-control" id="product_name" required placeholder="Enter product name" name="product_name" value = "<?php echo $data['name']?>">
     </div>
     <div class="form-group">
-      <label for="price">Price:</label>
-      <input type="text" class="form-control" id="price" required placeholder="Enter price" name="price" value= "<?php echo $data['price']?>">
+      <label for="price">Purchase price:</label>
+      <input type="text" class="form-control" id="purchaseprice" required placeholder="Enter price" name="purchaseprice" value= "<?php echo $data['purchaseprice']?>">
+    </div>
+    <div class="form-group">
+      <label for="price">Sale price:</label>
+      <input type="text" class="form-control" id="saleprice" required placeholder="Enter price" name="saleprice" value= "<?php echo $data['saleprice']?>">
     </div>
     <div class="form-group">
       <label for="category">Category:</label>

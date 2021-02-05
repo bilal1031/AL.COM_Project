@@ -7,9 +7,10 @@ CREATE TABLE CATEGORY(
 CREATE TABLE PRODUCT (
 		p_id INT PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(100) NOT NULL,
-        price INT NOT NULL,
+        purchaseprice INT NOT NULL,
+        saleprice INT NOT NULL,
         category INT NOT NULL,
-        FOREIGN KEY (category) REFERENCES CATEGORY (c_id)
+        FOREIGN KEY (category) REFERENCES CATEGORY (c_id) 
         );
         
         

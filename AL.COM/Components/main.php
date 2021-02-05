@@ -10,23 +10,28 @@
             </button>
             <div class="dropdown-menu">
             <?php  include "./Config/connection.php";
-                get_category(); 
+                   get_category(); 
             ?>    
             </div>
           </div>
     </div>
     
         <?php
-            //include "connection.php";
             if(isset($_POST['submit'])){
                                 
-                $sql = 'SELECT name,price,c_name FROM product INNER JOIN category ON c_id = category AND (name LIKE "%'.$_POST['search'].'%" OR c_name LIKE "%'.$_POST['search'].'%")';
+                $sql = 'SELECT p_id,name,purchaseprice,saleprice,c_name FROM product INNER JOIN category ON c_id = category AND (name LIKE "%'.$_POST['search'].'%" OR c_name LIKE "%'.$_POST['search'].'%")';
                 get_data($sql);               
                     
             }else if(isset($_GET['category'])){
                     $cat =  $_GET['category'];
-                    $sql = 'SELECT name,price,c_name FROM product INNER JOIN category ON c_id = category AND c_name = "'.$cat.'";';
-                     get_data($sql);
+                    $sql = 'SELECT p_id,name,purchaseprice,saleprice,c_name FROM product INNER JOIN category ON c_id = category AND c_name = "'.$cat.'";';
+                    get_data($sql);
 
+            }else if(isset($_POST['delete'])){
+                    $sql = 'DELETE FROM product WHERE p_id = "'.$_POST['p_id'].'";';
+                    delete_data($sql);
+                    $cat =  $_POST['category'];
+                    $sql = 'SELECT p_id,name,purchaseprice,saleprice,c_name FROM product INNER JOIN category ON c_id = category AND c_name = "'.$cat.'";';
+                    get_data($sql);     
             }
    ?>
