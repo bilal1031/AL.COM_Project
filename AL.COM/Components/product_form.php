@@ -70,7 +70,7 @@
       <select name="category" class="form-control form-select form-select-lg mb-3" aria-label=".form-select-lg example">
         <option selected>Open this select category</option>
         <?php  
-              get_category(false); 
+              get_category(false,$data["c_name"]); 
                
         ?>  
       </select>

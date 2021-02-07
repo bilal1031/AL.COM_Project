@@ -10,7 +10,7 @@
             </button>
             <div class="dropdown-menu">
             <?php  include "./Config/connection.php";
-                   get_category(true); 
+                   get_category(true,null); 
                
             ?>    
              <a class="dropdown-item" href="index.php?category=allitems">All Items</a>

@@ -142,7 +142,7 @@
         $conn->close();
     }
 
-    function get_category($ismain){
+    function get_category($ismain,$selected){
         include "serverconfig.php";
         $sql = "SELECT c_name FROM category";
         $result = mysqli_query($conn, $sql);
@@ -152,8 +152,12 @@
                     echo ' <a class="dropdown-item" href="index.php?category='.strtolower($row['c_name']).'">'.$row['c_name'].'</a>' ;            
                 }
                 if($ismain == false){
-                  
-                    echo '<option value="'.$row['c_name'].'">'.$row['c_name'].'</option>';
+                    if($selected == $row['c_name']){
+                        echo '<option selected value="'.$row['c_name'].'">'.$row['c_name'].'</option>';
+                    }else {
+                        echo '<option value="'.$row['c_name'].'">'.$row['c_name'].'</option>';
+                    }
+                    
                     
                 }
              }   
