@@ -142,14 +142,21 @@
         $conn->close();
     }
 
-    function get_category(){
+    function get_category($ismain){
         include "serverconfig.php";
         $sql = "SELECT c_name FROM category";
-         $result = mysqli_query($conn, $sql);
+        $result = mysqli_query($conn, $sql);
         if (mysqli_num_rows($result) > 0) {
             while($row = $result->fetch_assoc()) {
-               echo ' <a class="dropdown-item" href="index.php?category='.strtolower($row['c_name']).'">'.$row['c_name'].'</a>' ; 
-            }   
+                if($ismain == true){
+                    echo ' <a class="dropdown-item" href="index.php?category='.strtolower($row['c_name']).'">'.$row['c_name'].'</a>' ;            
+                }
+                if($ismain == false){
+                  
+                    echo '<option value="'.$row['c_name'].'">'.$row['c_name'].'</option>';
+                    
+                }
+             }   
         }
 
     }

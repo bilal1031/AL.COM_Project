@@ -10,8 +10,10 @@
             </button>
             <div class="dropdown-menu">
             <?php  include "./Config/connection.php";
-                   get_category(); 
+                   get_category(true); 
+               
             ?>    
+             <a class="dropdown-item" href="index.php?category=allitems">All Items</a>
             </div>
           </div>
     </div>
@@ -24,8 +26,13 @@
                     
             }else if(isset($_GET['category'])){
                     $cat =  $_GET['category'];
-                    $sql = 'SELECT p_id,name,purchaseprice,saleprice,c_name FROM product INNER JOIN category ON c_id = category AND c_name = "'.$cat.'";';
-                    get_data($sql);
+                    if($cat == "allitems"){
+                        $sql = 'SELECT p_id,name,purchaseprice,saleprice,c_name FROM product INNER JOIN category ON c_id = category ORDER BY category;';               
+                    }else{
+                        $sql = 'SELECT p_id,name,purchaseprice,saleprice,c_name FROM product INNER JOIN category ON c_id = category AND c_name = "'.$cat.'";';
+                    
+                    }
+                get_data($sql);
 
             }else if(isset($_POST['delete'])){
                     $sql = 'DELETE FROM product WHERE p_id = "'.$_POST['p_id'].'";';

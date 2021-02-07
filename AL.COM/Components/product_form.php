@@ -10,12 +10,12 @@
                             </div>';    
                     }else{
                     
-                        $sql = 'INSERT INTO product(name,purchaseprice,saleprice,category) VALUES("'.$_POST['product_name'].'","'.$_POST['purchaseprice'].'","'.$_POST['saleprice'].'","'.$cat_id.'");';
+                        $sql = 'INSERT INTO product(name,purchaseprice,saleprice,category) VALUES("'.ucwords($_POST['product_name']).'","'.$_POST['purchaseprice'].'","'.$_POST['saleprice'].'","'.$cat_id.'");';
                         save_data($sql);
                           
                     }
               }else{
-                    $sql = 'UPDATE product SET name = "'.$_POST['product_name'].'" ,purchaseprice = "'.$_POST['purchaseprice'].'" ,saleprice = "'.$_POST['saleprice'].'" ,category = "'.$cat_id.'" WHERE p_id = '.$p_id.'';
+                    $sql = 'UPDATE product SET name = "'.ucwords($_POST['product_name']).'" ,purchaseprice = "'.$_POST['purchaseprice'].'" ,saleprice = "'.$_POST['saleprice'].'" ,category = "'.$cat_id.'" WHERE p_id = '.$p_id.'';
                     save_data($sql);
               }
             }
@@ -55,7 +55,7 @@
   <form action='<?php echo $link?>' method="post">
     <div class="form-group">
       <label for="productname">Product Name:</label>
-      <input type="product_name" class="form-control" id="product_name" required placeholder="Enter product name" name="product_name" value = "<?php echo $data['name']?>">
+      <input type="product_name" class="form-control" id="product_name" required placeholder="Enter product name" name="product_name" value = "<?php echo ucwords($data['name'])?>">
     </div>
     <div class="form-group">
       <label for="price">Purchase price:</label>
@@ -66,10 +66,17 @@
       <input type="text" class="form-control" id="saleprice" required placeholder="Enter price" name="saleprice" value= "<?php echo $data['saleprice']?>">
     </div>
     <div class="form-group">
-      <label for="category">Category:</label>
-      <input type="text" class="form-control" id="category" required placeholder="Enter category" name="category" value = "<?php echo $data['c_name']?>">
+      <label for="category">Category:</label><br>
+      <select name="category" class="form-control form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+        <option selected>Open this select category</option>
+        <?php  
+              get_category(false); 
+               
+        ?>  
+      </select>
+
     </div>
     <button type="submit" name="submit" class="btn btn-success col-2">Save</button>
   </form>
-  <div style="height:20px"></div>
+  <div style="height:100px"></div>
 </div>
