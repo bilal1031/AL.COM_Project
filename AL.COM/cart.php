@@ -17,5 +17,6 @@
     include "./Components/footer.php";
 
   ?>
+  <script>setTimeout(function(){ $('#delete-alert'). remove(); }, 1500);</script>
 </body>
 </html>

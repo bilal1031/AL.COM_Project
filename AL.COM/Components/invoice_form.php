@@ -3,7 +3,6 @@
    include "./Config/connection.php";
 
    if(isset($_POST['delete'])){
-     echo $_POST['c_id'];
     $sql = 'DELETE FROM cart WHERE p_id = "'.$_POST['p_id'].'" and c_id = "'.$_POST['c_id'].'"';                                 
     delete_data($sql);
   }else if (isset($_POST['deleteinvoice'])) {

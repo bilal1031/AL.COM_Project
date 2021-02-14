@@ -11,7 +11,12 @@ CREATE TABLE PRODUCT (
         category INT NOT NULL,
         FOREIGN KEY (category) REFERENCES CATEGORY (c_id) 
         );
-
+CREATE TABLE CART (
+	c_id INT PRIMARY KEY AUTO_INCREMENT,
+    p_id INT NOT NULL,
+    quantity INT NOT NULL,
+    FOREIGN KEY (p_id) REFERENCES product (p_id)
+);
 INSERT INTO CATEGORY(c_name) VALUES ("Cable");
 INSERT INTO CATEGORY(c_name) VALUES ("Laptop");
 INSERT INTO CATEGORY(c_name) VALUES ("Hard Drives");

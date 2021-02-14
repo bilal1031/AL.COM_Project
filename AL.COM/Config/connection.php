@@ -59,7 +59,7 @@
                 echo "Error Occured";
             }else{
                 echo '
-                    <div class="d-flex flex-row justify-content-around pl-5">
+                    <div class="d-flex flex-row justify-content-around pl-5" id="delete-alert">
                         <div class="alert alert-info w-50 mt-3 ml-5" role="alert">
                         Data Delete! 
                         </div>
