@@ -1,18 +1,35 @@
 <?php
-         function print_table($p_id,$name,$purchaseprice,$saleprice,$category){
+         function print_table($p_id,$name,$purchaseprice,$saleprice,$category,$admin){
 
                     echo '<tr>
                     <td>'.$name.'</td>
-                    <td>'.$purchaseprice.'</td>
-                    <td>'.$saleprice.'</td>
+                    ';
+                    if($admin){
+                        echo'  <td>'.$purchaseprice.'</td>
+                               <td>'.$saleprice.'</td>';
+                           
+                    
+                    }else{
+                    echo '
                     <td>'.$category.'</td>
-                    <td>                     
+                    <td> 
+                        <form class="form" action="'.$_SERVER["PHP_SELF"].'" method="post">
+                        <input type="number" class="form-control" id="price" required " name="price" value="'.$saleprice.'">                        
+                    </td>';
+                    }
+                    echo '
+                    <td>                   
                       <form class="form-inline" action="'.$_SERVER["PHP_SELF"].'" method="post">
-                           <input type="number" class="form-control" id="quantity" required placeholder="Enter Quantity" name="quantity" value = "">
+                           <input type="number" class="form-control" id="quantity" required placeholder="Enter Quantity" name="quantity">
                            <input type="hidden" name="p_id" value="'.$p_id.'"/>
-                           <button class="btn btn-warning my-2 my-sm-0 col-15 ml-3" type="submit"  name="cart">Add to cart</button>                     
-                      </form>
                    </td>
+                   <td>
+                        <button class="btn btn-warning my-2 my-sm-0 col-15 ml-3 from-control" type="submit"  name="cart">Add to cart</button>                     
+                        </form>
+                   </td>
+                   ';
+                   if($admin){
+                   echo '
                     <td>
                     <div class="d-flex flex-row">
                         <form class="form-inline" action="product_form.php?editproduct='.$name.'" method="post">
@@ -21,13 +38,13 @@
                         <form class="form-inline" action="'.$_SERVER["PHP_SELF"].'" method="post">
                              <input type="hidden" name="p_id" value="'.$p_id.'"/>
                              <input type="hidden" name="category" value="'.$category.'"/>
-                             <button class="btn btn-danger my-2 my-sm-0 col-15 ml-3" type="submit"  name="delete">Delete</button>
-                           
-                         </form>
+                             <button class="btn btn-danger my-2 my-sm-0 col-15 ml-3" type="submit"  name="delete">Delete</button>              
+                        </form>
  
                     </div>
-                    </td>
-                    </tr>';
+                    </td>';
+                   }
+                    echo '</tr>';
 
         }
         function print_invoice_table($c_id,$p_id,$name,$saleprice,$quantity,$button){
@@ -113,9 +130,7 @@
              }
 
         }
-    
-        
-       
+         
         function get_cat_id($sql){
             include "serverconfig.php";
             //echo "Connected successfully";
@@ -132,7 +147,7 @@
             return $c_id;
                
         }
-        function get_data($sql,$mode){
+        function get_data($sql,$mode,$admin){
             include "serverconfig.php";
             //echo "Connected successfully";
             //echo $sql;
@@ -145,17 +160,24 @@
                         <table class="table table-bordered text-center">
                         <thead>
                             <tr>
-                            <th>Name</th>
-                            <th>Purchase Price</th>
-                            <th>Sale Price</th>
-                            <th>Category</th>
-                            <th>Quantity</th>
-                            <th></th>
-                            </tr>
+                            <th>Name</th>';
+                if($admin){
+                    echo '<th>Purchase Price</th>
+                         <th>Sale Price</th>';
+                }else{
+                    echo '
+                    <th>Category</th>
+                    <th>Price</th>                
+                    <th>Quantity</th>
+                    <th></th>';
+                }
+                            
+                echo '       
+                        </tr>
                         </thead>
                         <tbody>';
                         while($row = $result->fetch_assoc()) {
-                            print_table($row['p_id'],$row['name'],$row['purchaseprice'],$row['saleprice'],$row['c_name'])  ; 
+                            print_table($row['p_id'],$row['name'],$row['purchaseprice'],$row['saleprice'],$row['c_name'],false)  ; 
                         }                             
                 echo '   </tbody>
                         </table>
@@ -170,19 +192,37 @@
                         $isrecipt = $_GET['recipt'];
                 }
                 if($isrecipt){
+                    echo '<div class="container mt-5 mb-5">
+                          <div class="d-flex flex-row justify-content-between">
+                              <div class="d-flex flex-row">
+                                <h1>AL.COM</h1>
+                                <p style="font-size:12px;margin-left:20px">Whole<br>Sale<br>Dealer</p>
+                              </div> 
+                              <div class="d-flex justify-content-right">
+                                <b>
+                                    <span class="ml-5">Faisal Attari</span><br>
+                                    <span >Contact: 0304-8688644</span><br>
+                                    <span >Contact: 0313-8688644</span><br>
+                                    <span>faisalhdd3@gmail.com</span>
+                                </b>
+                              </div> 
+
+                          </div>     
+                          <div class="containter mt-3">                 
+                            <span class="mt-2"><b>Date: </b>'.date("Y/m/d").'</span><br>
+                            <span class="mt-3"><b>M/s: </b>'.$_GET['client'].'</span>
+                          </div> 
+                          </div>';
                     echo '<h2>Recpit:</h2>';
                 }else{
-                    echo '<h2>Invoice Table</h2>';
+                    echo '<h2>Cart</h2>';
                 }
-                
-               
-      
-                echo'   
+                    echo'   
                         <table class="table table-bordered">
                         <thead>
                             <tr>
                             <th>Name</th>
-                            <th>Sale Price</th>
+                            <th>Price</th>
                             <th>Quantity</th>
                             <th>Total</th>
                           
@@ -191,28 +231,33 @@
                         <tbody>';
                         $total = 0;  
                         while($row = $result->fetch_assoc()) {
-                            $total += print_invoice_table($row['c_id'],$row['p_id'],$row['name'],$row['saleprice'],$row['quantity'],isset($_GET['recipt']));
+                            $total += print_invoice_table($row['c_id'],$row['p_id'],$row['name'],$row['price'],$row['quantity'],isset($_GET['recipt']));
                         }                             
                 echo '   </tbody>
                         </table>
                     </div>
-                 <div class="d-flex flex-row justify-content-center mt-5">
-                    <div class="alert alert-info" role="alert" style="width:38%;">
+                    <div class="d-flex flex-row justify-content-center mt-5">
+                    <div class="alert alert-info" role="alert" style="width:30%;">
                     <form class="form-inline" action="'.$_SERVER["PHP_SELF"].'" method="post">
-                             <b>Total Price= '.$total.'</b>
+                             <b><span class="ml-5">Grand total = '.$total.'</span></b>
                     ';
                     if(!$isrecipt){
-                         echo '<button class="btn btn-success my-2 my-sm-0 col-15 ml-5" type="submit"  name="generate">Generate Recipt</button>     
-                            <button class="btn btn-danger my-2 my-sm-0 col-15 ml-3" type="submit"  name="deleteinvoice">Delete Invoice</button>                           
-                        ';
+                         echo '<input type="text" name="client" placeholder="Enter buyer name" class="form-control ml-5 mt-3"/>
+                               <button class="btn btn-success my-2 col-15 ml-5 mt-4" type="submit"  name="generate">Generate Recipt</button>     
+                               <button class="btn btn-danger my-2 col-15 ml-3 mt-4" type="submit"  name="deleteinvoice">Delete cart</button>                           
+                              ';
                     }
                  echo  '</form>
                             
-                        </div>
-        
-                    </div>   
-                    <div style="height:100px"></div>
+                        </div>      
+                    </div>  .
+                    <div style="height:200px"></div>  
                     ';
+                    if($isrecipt){
+                        echo ' <div class="text-center p-3 fixed-bottom mb-5" >
+                                <span style="color:black"><b>Address: </b>Shop# 3-4, 1st Floor Zaitoon Plaza Hall Road,Lahore.</span>
+                            </div>  ';
+                    }
             }
         } else {
             echo '
@@ -224,21 +269,7 @@
         }
         $conn->close();
     }
-    /*<div class="container">
-    <h2>Client Information</h2>
-    <form class="form-inline mt-5" action="invoice.php" method="post">
-      <div class="form-group">
-        <label for="productname">Product Name:</label>
-        <input type="client_name" class="form-control ml-2" id="client_name" required placeholder="Enter client name" name="client_name" value = "">
-      </div>
-      <div class="form-group ml-5">
-        <label for="price">Purchase price:</label>
-        <input type="tel" class="form-control ml-2" id="contactno" required placeholder="Enter number" name="contactno" value= "">
-      </div> 
-      <button type="submit" name="submit" class="btn btn-success ml-3">Generate Invoice</button>
-    </form>
-    <div style="height:100px"></div>
-  </div>*/
+
     function get_category($ismain,$selected){
         include "serverconfig.php";
         $sql = "SELECT c_name FROM category";
@@ -259,9 +290,6 @@
                 }
              }   
         }
-
-    }
-    function add_product_tocart($sql){
 
     }
 ?>

@@ -8,10 +8,11 @@
         <script src="./js/popper.min.js"></script>
         <script src="./js/bootstrap.min.js"></script>
 </head>
-<body style="background-color: rgb(126, 186, 255);">
+<body style="background-color: rgb(110, 186, 255);">
+
   <?php      
      
-    include "./Components/navbar.php";
+    include "./Components/navbar.php";  
     navbar("cart"); 
     include "./Components/invoice_form.php"; 
     include "./Components/footer.php";

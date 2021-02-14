@@ -2,7 +2,7 @@
      <?php 
         include "./Config/connection.php";
         if (isset($_POST['cart'])){
-                    $sql = 'INSERT INTO cart(p_id,quantity) VALUES ('.$_POST['p_id'].','.$_POST['quantity'].')';
+                    $sql = 'INSERT INTO cart(p_id,quantity,price) VALUES ('.$_POST['p_id'].','.$_POST['quantity'].','.$_POST['price'].')';
                     save_data($sql);
          }
     ?>
@@ -29,7 +29,7 @@
             if(isset($_POST['submit'])){
                                 
                 $sql = 'SELECT p_id,name,purchaseprice,saleprice,c_name FROM product INNER JOIN category ON c_id = category AND (name LIKE "%'.$_POST['search'].'%" OR c_name LIKE "%'.$_POST['search'].'%")';
-                get_data($sql,"main");  
+                get_data($sql,"main",false);  
             
                     
             }else if(isset($_GET['category'])){
@@ -40,7 +40,7 @@
                         $sql = 'SELECT p_id,name,purchaseprice,saleprice,c_name FROM product INNER JOIN category ON c_id = category AND c_name = "'.$cat.'";';
                     
                     }
-                get_data($sql,"main");
+                get_data($sql,"main",false);
 
             }else if(isset($_POST['delete'])){
                     $sql = 'DELETE FROM product WHERE p_id = "'.$_POST['p_id'].'";';
