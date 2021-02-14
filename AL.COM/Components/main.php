@@ -1,4 +1,11 @@
    
+     <?php 
+        include "./Config/connection.php";
+        if (isset($_POST['cart'])){
+                    $sql = 'INSERT INTO cart(p_id,quantity) VALUES ('.$_POST['p_id'].','.$_POST['quantity'].')';
+                    save_data($sql);
+         }
+    ?>
     <div class="search_container">
         <form class="form-inline" action="<?=$_SERVER['PHP_SELF'];?>" method="post">
             <input class="form-control mr-sm-2 col-7" type="search" id="tosearch" name="search" required placeholder="Search Product" aria-label="Search">
@@ -9,7 +16,7 @@
               Category
             </button>
             <div class="dropdown-menu">
-            <?php  include "./Config/connection.php";
+            <?php 
                    get_category(true,null); 
                
             ?>    
@@ -22,7 +29,8 @@
             if(isset($_POST['submit'])){
                                 
                 $sql = 'SELECT p_id,name,purchaseprice,saleprice,c_name FROM product INNER JOIN category ON c_id = category AND (name LIKE "%'.$_POST['search'].'%" OR c_name LIKE "%'.$_POST['search'].'%")';
-                get_data($sql);               
+                get_data($sql,"main");  
+            
                     
             }else if(isset($_GET['category'])){
                     $cat =  $_GET['category'];
@@ -32,7 +40,7 @@
                         $sql = 'SELECT p_id,name,purchaseprice,saleprice,c_name FROM product INNER JOIN category ON c_id = category AND c_name = "'.$cat.'";';
                     
                     }
-                get_data($sql);
+                get_data($sql,"main");
 
             }else if(isset($_POST['delete'])){
                     $sql = 'DELETE FROM product WHERE p_id = "'.$_POST['p_id'].'";';
