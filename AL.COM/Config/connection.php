@@ -14,7 +14,7 @@
                     echo '
                     <td>'.$category.'</td>
                     <td> 
-                        <form class="form" action="'.$_SERVER["PHP_SELF"].'" method="post">
+                        <form class="form " action="'.$_SERVER["PHP_SELF"].'" method="post">
                         <input type="number" class="form-control" id="price" required " name="price" value="'.$saleprice.'">                        
                     </td>';
                     echo '
@@ -167,7 +167,7 @@
                     echo '<th>Purchase Price</th>
                           <th>Sale Price</th>
                           <th>Category</th>
-                          ';
+                          <th></th>';
                 }else{
                     echo '
                     <th>Category</th>
@@ -246,7 +246,7 @@
                              <b><span class="">Grand total = '.$total.'</span></b>
                     ';
                     if(!$isrecipt){
-                         echo '<input type="text" name="client" placeholder="Enter buyer name" class="form-control ml-5 mr-4 mt-3"/>
+                         echo '<input type="text" name="client" placeholder="Enter buyer name" required class="form-control ml-5 mr-4 mt-3"/>
                                <button class="btn btn-success my-2 col-15 ml-2 mt-4" type="submit"  name="generate">Generate Recipt</button>     
                                <button class="btn btn-danger my-2 col-15 ml-3 mt-4" type="submit"  name="deleteinvoice">Delete cart</button>                           
                               ';
