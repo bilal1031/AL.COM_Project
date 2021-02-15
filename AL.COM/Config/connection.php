@@ -5,9 +5,10 @@
                     <td>'.$name.'</td>
                     ';
                     if($admin){
-                        echo'  <td>'.$purchaseprice.'</td>
-                               <td>'.$saleprice.'</td>';
-                           
+                        echo'                                
+                               <td>'.$purchaseprice.'</td>
+                               <td>'.$saleprice.'</td>
+                               <td>'.$category.'</td> ';
                     
                     }else{
                     echo '
@@ -16,18 +17,19 @@
                         <form class="form" action="'.$_SERVER["PHP_SELF"].'" method="post">
                         <input type="number" class="form-control" id="price" required " name="price" value="'.$saleprice.'">                        
                     </td>';
-                    }
                     echo '
-                    <td>                   
-                      <form class="form-inline" action="'.$_SERVER["PHP_SELF"].'" method="post">
-                           <input type="number" class="form-control" id="quantity" required placeholder="Enter Quantity" name="quantity">
-                           <input type="hidden" name="p_id" value="'.$p_id.'"/>
-                   </td>
-                   <td>
-                        <button class="btn btn-warning my-2 my-sm-0 col-15 ml-3 from-control" type="submit"  name="cart">Add to cart</button>                     
-                        </form>
-                   </td>
-                   ';
+                         <td>                   
+                            <form class="form-inline" action="'.$_SERVER["PHP_SELF"].'" method="post">
+                                <input type="number" class="form-control" id="quantity" required placeholder="Enter Quantity" name="quantity">
+                                <input type="hidden" name="p_id" value="'.$p_id.'"/>
+                        </td>
+                        <td>
+                                <button class="btn btn-warning my-2 my-sm-0 col-15 ml-3 from-control" type="submit"  name="cart">Add to cart</button>                     
+                                </form>
+                        </td>
+                        ';
+                    }
+                   
                    if($admin){
                    echo '
                     <td>
@@ -163,7 +165,9 @@
                             <th>Name</th>';
                 if($admin){
                     echo '<th>Purchase Price</th>
-                         <th>Sale Price</th>';
+                          <th>Sale Price</th>
+                          <th>Category</th>
+                          ';
                 }else{
                     echo '
                     <th>Category</th>
@@ -177,7 +181,7 @@
                         </thead>
                         <tbody>';
                         while($row = $result->fetch_assoc()) {
-                            print_table($row['p_id'],$row['name'],$row['purchaseprice'],$row['saleprice'],$row['c_name'],false)  ; 
+                            print_table($row['p_id'],$row['name'],$row['purchaseprice'],$row['saleprice'],$row['c_name'],$admin)  ; 
                         }                             
                 echo '   </tbody>
                         </table>
@@ -237,13 +241,13 @@
                         </table>
                     </div>
                     <div class="d-flex flex-row justify-content-center mt-5">
-                    <div class="alert alert-info" role="alert" style="width:30%;">
-                    <form class="form-inline" action="'.$_SERVER["PHP_SELF"].'" method="post">
-                             <b><span class="ml-5">Grand total = '.$total.'</span></b>
+                    <div class="alert alert-info" role="alert" style="width:28%;">
+                    <form class="form-inline justify-content-center" action="'.$_SERVER["PHP_SELF"].'" method="post">
+                             <b><span class="">Grand total = '.$total.'</span></b>
                     ';
                     if(!$isrecipt){
-                         echo '<input type="text" name="client" placeholder="Enter buyer name" class="form-control ml-5 mt-3"/>
-                               <button class="btn btn-success my-2 col-15 ml-5 mt-4" type="submit"  name="generate">Generate Recipt</button>     
+                         echo '<input type="text" name="client" placeholder="Enter buyer name" class="form-control ml-5 mr-4 mt-3"/>
+                               <button class="btn btn-success my-2 col-15 ml-2 mt-4" type="submit"  name="generate">Generate Recipt</button>     
                                <button class="btn btn-danger my-2 col-15 ml-3 mt-4" type="submit"  name="deleteinvoice">Delete cart</button>                           
                               ';
                     }
@@ -257,8 +261,11 @@
                         echo ' <div class="text-center p-3 fixed-bottom mb-5" >
                                 <span style="color:black"><b>Address: </b>Shop# 3-4, 1st Floor Zaitoon Plaza Hall Road,Lahore.</span>
                             </div>  ';
+                        $sql = 'DELETE FROM cart'; 
+                        delete_data($sql);
                     }
             }
+            
         } else {
             echo '
                 <div class="d-flex flex-row justify-content-center mt-5">

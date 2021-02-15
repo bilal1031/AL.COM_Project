@@ -29,7 +29,9 @@
                                 
                             </div>
                             <ul class="navbar-nav">
-                                <li class="nav-item '.$isactive[0].'"><a href="index.php"  class="nav-link">Home</a></li>
+                                <li class="nav-item '.$isactive[0].'">
+                                  <a href="index.php"  class="nav-link">Home</a>
+                                </li>
                                 <li class="nav-item '.$isactive[1].'"><a href="product_form.php"  class="nav-link" >Add Product</a></li>
                                 <li class="nav-item '.$isactive[2].'"><a  href="cart.php" class="nav-link"  >Go to Cart</a></li>
                                 <li class="nav-item '.$isactive[3].'"><a  href="about.php" class="nav-link"  >About Us</a></li>
